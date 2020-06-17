@@ -1,0 +1,31 @@
+配置IP地址
+
+<Huawei>sys	
+<Huawei>system-view 
+Enter system view, return user view with Ctrl+Z.
+[Huawei]undo info enable
+[Huawei]sysname LSW_OFFICE
+[LSW_OFFICE]dhcp enable#开启DHCP服务
+[LSW_OFFICE]dhcp snooping enable#开启DHCP SNOOPING服务
+[LSW_OFFICE]vlan 10#创建vlan 10
+[LSW_OFFICE-vlan10]q
+[LSW_OFFICE]int vlan 10#进入vlan10的虚拟接口
+[LSW_OFFICE-Vlanif10]ip address 172.16.0.1 16#设置vlan 10的IP地址
+[LSW_OFFICE-Vlanif10]dhcp select global#设置全局DHCP
+[LSW_OFFICE-Vlanif10]q
+[LSW_OFFICE]ip pool officebuilding#建立IP地址池officebuilding可以自定义
+Info:It's successful to create an IP address pool.
+
+[LSW_OFFICE-ip-pool-officebuilding]network 172.16.0.0 Mask 255.255.255.0#设置IP网段，掩码24
+[LSW_OFFICE-ip-pool-officebuilding]gate	
+[LSW_OFFICE-ip-pool-officebuilding]gateway-list 172.16.0.1#设置网关
+[LSW_OFFICE-ip-pool-officebuilding]dns	
+[LSW_OFFICE-ip-pool-officebuilding]dns-list 114.114.114.114#设置DNS
+[LSW_OFFICE-ip-pool-officebuilding]q
+[LSW_OFFICE]int g0/0/1#进入接口
+[LSW_OFFICE-GigabitEthernet0/0/1]port link-type access#设置接口模式 
+[LSW_OFFICE-GigabitEthernet0/0/1]port default vlan 10#此接口划分到vlan10
+[LSW_OFFICE-GigabitEthernet0/0/1]q
+[LSW_OFFICE]
+
+

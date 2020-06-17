@@ -1,0 +1,51 @@
+[SW5]telnet server enable 
+Info: The Telnet server has been enabled.
+[SW5]aaa
+[SW5-aaa]loc	
+[SW5-aaa]local-user admin p	
+[SW5-aaa]local-user admin password c	
+[SW5-aaa]local-user admin password cipher huawei
+[SW5-aaa]lo	
+[SW5-aaa]local-user admin ser	
+[SW5-aaa]local-user admin service-type telnet
+[SW5-aaa]q
+[SW5]user	
+[SW5]user-i	
+[SW5]user-interface vty 0 4
+[SW5-ui-vty0-4]aut	
+[SW5-ui-vty0-4]authentication-mode aaa
+[SW5-ui-vty0-4]pro	
+[SW5-ui-vty0-4]protocol i	
+[SW5-ui-vty0-4]protocol inbound t	
+[SW5-ui-vty0-4]protocol inbound telnet 
+[SW5-ui-vty0-4]q
+[SW5]int vlan 200
+[SW5-Vlanif200]ip add 172.14.0.77 24
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SW5]telnet server enable 
+[SW5]aaa
+[SW5-aaa]local-user admin password cipher huawei
+[SW5-aaa]local-user admin service-type telnet
+[SW5]user-interface vty 0 4
+[SW5-ui-vty0-4]authentication-mode aaa
+[SW5-ui-vty0-4]protocol inbound telnet 
+[SW5]int vlan 200
+[SW5-Vlanif200]ip add 172.14.0.77 24
+

@@ -1,0 +1,17 @@
+连接FW2图形化配置
+
+配置防火墙OSPF
+[USG6000V1]ospf
+[USG6000V1-ospf-1]area 0
+[USG6000V1-ospf-1-area-0.0.0.0]network 12.0.0.0 0.0.0.255
+[USG6000V1-ospf-1-area-0.0.0.0]network 13.0.0.0 0.0.0.255
+[USG6000V1-ospf-1-area-0.0.0.0]network 1.1.5.0 0.0.0.255
+[USG6000V1-ospf-1-area-0.0.0.0]q
+
+配置防火墙端口允许通过的的服务
+[USG6000V1]int g1/0/1
+[USG6000V1-GigabitEthernet1/0/1]serv	
+[USG6000V1-GigabitEthernet1/0/1]service-m	
+[USG6000V1-GigabitEthernet1/0/1]service-manage all p	
+[USG6000V1-GigabitEthernet1/0/1]service-manage all permit 
+[USG6000V1-GigabitEthernet1/0/1]

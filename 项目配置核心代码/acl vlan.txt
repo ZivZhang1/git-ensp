@@ -1,0 +1,32 @@
+[CENTER]acl number 3000
+[CENTER-acl-adv-3000]rule 5 p	
+[CENTER-acl-adv-3000]rule 5 permit i	
+[CENTER-acl-adv-3000]rule 5 permit ip s	
+[CENTER-acl-adv-3000]rule 5 permit ip source 11.0.0.0 0.0.0.255 d	
+[CENTER-acl-adv-3000]rule 5 permit ip source 11.0.0.0 0.0.0.255 destination 211.67.15.0 0.0.0.255
+[CENTER-acl-adv-3000]q
+[CENTER]tr	
+[CENTER]traffic c	
+[CENTER]traffic classifier 111
+[CENTER-classifier-111]if	
+[CENTER-classifier-111]if-match a	
+[CENTER-classifier-111]if-match acl 3000
+[CENTER-classifier-111]q
+[CENTER]tr	
+[CENTER]traffic b	
+[CENTER]traffic behavior 111
+[CENTER-behavior-111]d	
+[CENTER-behavior-111]deny
+[CENTER-behavior-111]q
+[CENTER]tr	
+[CENTER]traffic p	
+[CENTER]traffic policy 111
+[CENTER-trafficpolicy-111]cla	
+[CENTER-trafficpolicy-111]classifier 111 b	
+[CENTER-trafficpolicy-111]classifier 111 behavior 111
+[CENTER-trafficpolicy-111]q
+[CENTER]tr	
+[CENTER]traffic-policy 111 g	
+[CENTER]traffic-policy 111 global i	
+[CENTER]traffic-policy 111 global inbound 
+[CENTER]q

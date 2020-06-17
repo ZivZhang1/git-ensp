@@ -1,0 +1,86 @@
+配置FW2
+1，配置到达总部和其他私网的静态路由，下一跳地址为1.1.5.2。
+[USG6000V1]ip route-static 0.0.0.0 0.0.0.0 1.1.5.2
+
+定义被保护的数据流。
+[USG6000V1]acl 3000
+[USG6000V1-acl-adv-3000]rule p	
+[USG6000V1-acl-adv-3000]rule permit ip source 12.0.0.0 0.0.0.255 des	
+[USG6000V1-acl-adv-3000]rule permit ip source 12.0.0.0 0.0.0.255 destination 14.0.0.0 0.0.0.255
+[USG6000V1-acl-adv-3000]rule permit ip source 13.0.0.0 0.0.0.255 destination 14.0.0.0 0.0.0.255
+[USG6000V1-acl-adv-3000]q
+
+配置名称为tran1的IPSec安全提议。（第2条命令开始为缺省配置可以不用配置）
+[USG6000V1]ipsec pro	
+[USG6000V1]ipsec proposal tran1
+[USG6000V1-ipsec-proposal-tran1]enc	
+[USG6000V1-ipsec-proposal-tran1]encapsulation-mode t	
+[USG6000V1-ipsec-proposal-tran1]encapsulation-mode tu	
+[USG6000V1-ipsec-proposal-tran1]encapsulation-mode tunnel 
+[USG6000V1-ipsec-proposal-tran1]tr	
+[USG6000V1-ipsec-proposal-tran1]tran	
+[USG6000V1-ipsec-proposal-tran1]transform esp
+[USG6000V1-ipsec-proposal-tran1]esp a	
+[USG6000V1-ipsec-proposal-tran1]esp authentication-algorithm sha2-256
+[USG6000V1-ipsec-proposal-tran1]esp en	
+[USG6000V1-ipsec-proposal-tran1]esp encryption-algorithm aes
+                                                         ^
+Error:Ambiguous command found at '^' position.
+[USG6000V1-ipsec-proposal-tran1]esp encryption-algorithm a	
+[USG6000V1-ipsec-proposal-tran1]esp encryption-algorithm aes-?
+  aes-128                                 aes-192
+  aes-256                                 
+[USG6000V1-ipsec-proposal-tran1]esp encryption-algorithm aes-256
+[USG6000V1-ipsec-proposal-tran1]q
+
+配置序号为10的IKE安全提议。（第2条命令开始为缺省配置可以不用配置）
+[USG6000V1]ike pro	
+[USG6000V1]ike proposal 10
+[USG6000V1-ike-proposal-10]aut	
+[USG6000V1-ike-proposal-10]authentication-m	
+[USG6000V1-ike-proposal-10]authentication-method p	
+[USG6000V1-ike-proposal-10]authentication-method pre-share 
+[USG6000V1-ike-proposal-10]au	
+[USG6000V1-ike-proposal-10]authentication-a	
+[USG6000V1-ike-proposal-10]authentication-algorithm sha2-256
+[USG6000V1-ike-proposal-10]q
+
+配置IKE Peer。
+[USG6000V1]ike peer a
+[USG6000V1-ike-peer-a]ike	
+[USG6000V1-ike-peer-a]ike-proposal 10
+[USG6000V1-ike-peer-a]re	
+[USG6000V1-ike-peer-a]remote-add	
+[USG6000V1-ike-peer-a]remote-address 1.1.3.1
+[USG6000V1-ike-peer-a]pre	
+[USG6000V1-ike-peer-a]pre-shared-key huawei
+Info: The password you entered does not meet the minimum complexity requirement.
+The password is suggested to contain at least three types of characters from the
+ following four groups: Uppercase letters <A-Z>; Lowercase letters <a-z>; Numera
+ls <0-9>; Symbols (all characters not defined as letters or numerals), such as !
+,$,#, and %.
+[USG6000V1-ike-peer-a]q
+
+配置名称为：map1，序号为：10的IPSec安全策略。
+[USG6000V1]ipsec po	
+[USG6000V1]ipsec policy map1 10 i	
+[USG6000V1]ipsec policy map1 10 isakmp 
+Info: The ISAKMP policy sequence number should be smaller than the template poli
+cy sequence number in the policy group. Otherwise, the ISAKMP policy does not ta
+ke effect.
+[USG6000V1-ipsec-policy-isakmp-map1-10]s	
+[USG6000V1-ipsec-policy-isakmp-map1-10]security acl 3000
+[USG6000V1-ipsec-policy-isakmp-map1-10]pro	
+[USG6000V1-ipsec-policy-isakmp-map1-10]proposal tran1
+[USG6000V1-ipsec-policy-isakmp-map1-10]ik	
+[USG6000V1-ipsec-policy-isakmp-map1-10]ike-peer a
+[USG6000V1-ipsec-policy-isakmp-map1-10]q
+
+在GE1/0/1接口上应用安全策略map1。
+[USG6000V1]int	
+[USG6000V1]interface g1/0/2
+[USG6000V1-GigabitEthernet1/0/2]ipsec po	
+[USG6000V1-GigabitEthernet1/0/2]ipsec policy map1
+[USG6000V1-GigabitEthernet1/0/2]q
+
+

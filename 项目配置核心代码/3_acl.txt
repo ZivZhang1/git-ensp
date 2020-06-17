@@ -1,0 +1,40 @@
+<LSW3>sys
+Enter system view, return user view with Ctrl+Z.
+[LSW3]acl n	
+[LSW3]acl number 3000
+[LSW3-acl-adv-3000]rule 5 p	
+[LSW3-acl-adv-3000]rule 5 permit ip s	
+[LSW3-acl-adv-3000]rule 5 permit ip source 172.14.0.0 0.0.0.255 d	
+[LSW3-acl-adv-3000]rule 5 permit ip source 172.14.0.0 0.0.0.255 destination 22.2
+2.33.0 0.0.0.255
+[LSW3-acl-adv-3000]q
+[LSW3]tr	
+[LSW3]traffic c	
+[LSW3]traffic classifier 111
+[LSW3-classifier-111]if	
+[LSW3-classifier-111]if-match a	
+[LSW3-classifier-111]if-match acl 3000
+[LSW3-classifier-111]q
+[LSW3]tr	
+[LSW3]traffic b	
+[LSW3]traffic behavior 111
+[LSW3-behavior-111]d	
+[LSW3-behavior-111]deny
+[LSW3-behavior-111]q
+[LSW3]tr	
+[LSW3]traffic p	
+[LSW3]traffic policy 111
+[LSW3-trafficpolicy-111]cla	
+[LSW3-trafficpolicy-111]classifier 111 b	
+[LSW3-trafficpolicy-111]classifier 111 behavior 111
+[LSW3-trafficpolicy-111]q
+[LSW3]tr	
+[LSW3]traffic-policy 111 g	
+[LSW3]traffic-policy 111 global i	
+[LSW3]traffic-policy 111 global inbound q
+                                        ^
+Error:Too many parameters found at '^' position.
+[LSW3]traffic-policy 111 global inbound 
+[LSW3]q
+
+

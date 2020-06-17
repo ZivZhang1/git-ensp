@@ -1,0 +1,22 @@
+[LSW1]ospf
+[LSW1-ospf-1]area 0
+[LSW1-ospf-1-area-0.0.0.0]net	
+[LSW1-ospf-1-area-0.0.0.0]network 22.22.11.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]network 22.22.22.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]network 22.22.33.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]network 172.16.0.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]network 172.14.0.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]network 12.0.0.0 0.0.0.255
+[LSW1-ospf-1-area-0.0.0.0]q
+
+[LSW2]ospf
+[LSW2-ospf-1]area 0
+[LSW2-ospf-1-area-0.0.0.0]net	
+[LSW2-ospf-1-area-0.0.0.0]network 22.22.11.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]network 22.22.22.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]network 22.22.33.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]network 172.16.0.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]network 172.14.0.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]network 13.0.0.0 0.0.0.255
+[LSW2-ospf-1-area-0.0.0.0]
+<LSW2>save

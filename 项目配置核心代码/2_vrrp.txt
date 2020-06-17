@@ -1,0 +1,182 @@
+[LSW1]ip route-static 1.1.1.0 255.255.255.0 12.0.0.1
+
+[LSW2]ip route-static 1.1.1.0 255.255.255.0 13.0.0.1
+
+[USG6000V1]ip route-static 22.22.11.0 255.255.255.0 12.0.0.2
+[USG6000V1]ip route-static 22.22.22.0 255.255.255.0 12.0.0.2
+[USG6000V1]ip route-static 22.22.33.0 255.255.255.0 12.0.0.2
+[USG6000V1]ip route-static 172.16.0.0 255.255.255.0 12.0.0.2
+[USG6000V1]ip route-static 172.14.0.0 255.255.255.0 12.0.0.2
+[USG6000V1]ip route-static 22.22.11.0 255.255.255.0 13.0.0.2 p	
+[USG6000V1]ip route-static 22.22.11.0 255.255.255.0 13.0.0.2 preference 70
+[USG6000V1]ip route-static 22.22.22.0 255.255.255.0 13.0.0.2 preference 70
+[USG6000V1]ip route-static 22.22.33.0 255.255.255.0 13.0.0.2 preference 70
+[USG6000V1]ip route-static 172.16.0.0 255.255.255.0 13.0.0.2 preference 70
+[USG6000V1]ip route-static 172.14.0.0 255.255.255.0 13.0.0.2 preference 70
+[USG6000V1]
+
+
+
+
+VLAN1
+主
+[LSW1]int vlan 10
+[LSW1-Vlanif10]vrrp vrid 1 v	
+[LSW1-Vlanif10]vrrp vrid 1 virtual-ip 22.22.11.1
+[LSW1-Vlanif10]vrrp vrid 1 p	
+[LSW1-Vlanif10]vrrp vrid 1 pri	
+[LSW1-Vlanif10]vrrp vrid 1 priority 200
+[LSW1-Vlanif10]vrrp vrid 1 pree	
+[LSW1-Vlanif10]vrrp vrid 1 preempt-mode t	
+[LSW1-Vlanif10]vrrp vrid 1 preempt-mode timer d	
+[LSW1-Vlanif10]vrrp vrid 1 preempt-mode timer delay 0
+[LSW1-Vlanif10]vrrp v	
+[LSW1-Vlanif10]vrrp vrid 1 tra	
+[LSW1-Vlanif10]vrrp vrid 1 track in	
+[LSW1-Vlanif10]vrrp vrid 1 track interface g0/0/2 r	
+[LSW1-Vlanif10]vrrp vrid 1 track interface g0/0/2 reduced 100
+[LSW1-Vlanif10]vrrp vrid 1 track interface g0/0/1 reduced 100
+[LSW1-Vlanif10]
+备
+[LSW2]int vlan 10
+[LSW2-Vlanif10]vrrp vrid 1 v	
+[LSW2-Vlanif10]vrrp vrid 1 virtual-ip 22.22.11.1
+[LSW2-Vlanif10]vrrp vrid 1 pr	
+[LSW2-Vlanif10]vrrp vrid 1 priority 150
+[LSW2-Vlanif10]vrrp v	
+[LSW2-Vlanif10]vrrp vrid 1 pre	
+[LSW2-Vlanif10]vrrp vrid 1 preempt-mode t	
+[LSW2-Vlanif10]vrrp vrid 1 preempt-mode timer d	
+[LSW2-Vlanif10]vrrp vrid 1 preempt-mode timer delay 0
+[LSW2-Vlanif10]
+
+VLAN2
+主
+[LSW1]int vlan 20
+[LSW1-Vlanif20]vrrp v	
+[LSW1-Vlanif20]vrrp vrid 2 vir	
+[LSW1-Vlanif20]vrrp vrid 2 virtual-ip 22.22.22.1
+[LSW1-Vlanif20]vrrp v	
+[LSW1-Vlanif20]vrrp vrid 2 pri	
+[LSW1-Vlanif20]vrrp vrid 2 priority 200
+[LSW1-Vlanif20]vrrp v	
+[LSW1-Vlanif20]vrrp vrid 2 pree	
+[LSW1-Vlanif20]vrrp vrid 2 preempt-mode t	
+[LSW1-Vlanif20]vrrp vrid 2 preempt-mode timer d	
+[LSW1-Vlanif20]vrrp vrid 2 preempt-mode timer delay 0
+[LSW1-Vlanif20]vrrp v	
+[LSW1-Vlanif20]vrrp vrid 2 t	
+[LSW1-Vlanif20]vrrp vrid 2 tra	
+[LSW1-Vlanif20]vrrp vrid 2 track in	
+[LSW1-Vlanif20]vrrp vrid 2 track interface g0/0/2 r	
+[LSW1-Vlanif20]vrrp vrid 2 track interface g0/0/2 reduced 100
+[LSW1-Vlanif20]vrrp vrid 2 track interface g0/0/1 reduced 100
+[LSW1-Vlanif20]q
+[LSW1]
+备
+[LSW2]int vlan 20
+[LSW2-Vlanif20]	
+[LSW2-Vlanif20]vrrp v	
+[LSW2-Vlanif20]vrrp vrid 2 v	
+[LSW2-Vlanif20]vrrp vrid 2 virtual-ip 22.22.22.1
+[LSW2-Vlanif20]vrrp vrid 2 pri	
+[LSW2-Vlanif20]vrrp vrid 2 priority 150
+[LSW2-Vlanif20]vrrp vrid 2 pre	
+[LSW2-Vlanif20]vrrp vrid 2 preempt-mode t	
+[LSW2-Vlanif20]vrrp vrid 2 preempt-mode timer d	
+[LSW2-Vlanif20]vrrp vrid 2 preempt-mode timer delay 0
+[LSW2-Vlanif20]
+
+VLAN3
+主
+[LSW1]int vlan 30
+[LSW1-Vlanif30]vrrp v	
+[LSW1-Vlanif30]vrrp vrid 3 v	
+[LSW1-Vlanif30]vrrp vrid 3 virtual-ip 22.22.33.1
+[LSW1-Vlanif30]vrrp vrid 3 pri	
+[LSW1-Vlanif30]vrrp vrid 3 priority 200
+[LSW1-Vlanif30]vrrp vrid 3 pre	
+[LSW1-Vlanif30]vrrp vrid 3 preempt-mode t	
+[LSW1-Vlanif30]vrrp vrid 3 preempt-mode timer d	
+[LSW1-Vlanif30]vrrp vrid 3 preempt-mode timer delay 0
+[LSW1-Vlanif30]vrrp vrid 3 t	
+[LSW1-Vlanif30]vrrp vrid 3 tra	
+[LSW1-Vlanif30]vrrp vrid 3 track i	
+[LSW1-Vlanif30]vrrp vrid 3 track interface g0/0/2 r	
+[LSW1-Vlanif30]vrrp vrid 3 track interface g0/0/2 reduced 100
+[LSW1-Vlanif30]vrrp vrid 3 track interface g0/0/1 reduced 100
+[LSW1-Vlanif30]
+备
+[LSW2]int vlan 30
+[LSW2-Vlanif30]vrrp v	
+[LSW2-Vlanif30]vrrp vrid 3 v	
+[LSW2-Vlanif30]vrrp vrid 3 virtual-ip 22.22.33.1
+[LSW2-Vlanif30]vrrp vrid 3 pri	
+[LSW2-Vlanif30]vrrp vrid 3 priority 150
+[LSW2-Vlanif30]vrrp vrid 3 pree	
+[LSW2-Vlanif30]vrrp vrid 3 preempt-mode t	
+[LSW2-Vlanif30]vrrp vrid 3 preempt-mode timer d	
+[LSW2-Vlanif30]vrrp vrid 3 preempt-mode timer delay 0
+[LSW2-Vlanif30]
+
+VLAN100
+主
+[LSW1]int vlan 100
+[LSW1-Vlanif100]vrrp v	
+[LSW1-Vlanif100]vrrp vrid 4 v	
+[LSW1-Vlanif100]vrrp vrid 4 virtual-ip 172.16.0.1
+[LSW1-Vlanif100]vrrp vrid 4 pri	
+[LSW1-Vlanif100]vrrp vrid 4 priority 200
+[LSW1-Vlanif100]vrrp vrid 4 pree	
+[LSW1-Vlanif100]vrrp vrid 4 preempt-mode t	
+[LSW1-Vlanif100]vrrp vrid 4 preempt-mode timer d	
+[LSW1-Vlanif100]vrrp vrid 4 preempt-mode timer delay 0
+[LSW1-Vlanif100]vrrp vrid 4 tra	
+[LSW1-Vlanif100]vrrp vrid 4 track i	
+[LSW1-Vlanif100]vrrp vrid 4 track interface g0/0/2 r	
+[LSW1-Vlanif100]vrrp vrid 4 track interface g0/0/2 reduced 100
+[LSW1-Vlanif100]vrrp vrid 4 track interface g0/0/1 reduced 100
+[LSW1-Vlanif100]
+备
+[LSW2-Vlanif30]int vlan 100
+[LSW2-Vlanif100]vrrp v	
+[LSW2-Vlanif100]vrrp vrid 4 v	
+[LSW2-Vlanif100]vrrp vrid 4 virtual-ip 172.16.0.1
+[LSW2-Vlanif100]vrrp vrid 4 pri	
+[LSW2-Vlanif100]vrrp vrid 4 priority 150
+[LSW2-Vlanif100]vrrp vrid 4 pre	
+[LSW2-Vlanif100]vrrp vrid 4 preempt-mode t	
+[LSW2-Vlanif100]vrrp vrid 4 preempt-mode timer d	
+[LSW2-Vlanif100]vrrp vrid 4 preempt-mode timer delay 0
+[LSW2-Vlanif100]
+
+VLAN200
+主
+[LSW1-Vlanif100]int vlan 200
+[LSW1-Vlanif200]vrrp v	
+[LSW1-Vlanif200]vrrp vrid 5 v	
+[LSW1-Vlanif200]vrrp vrid 5 virtual-ip 172.14.0.1
+[LSW1-Vlanif200]vrrp vrid 5 pri	
+[LSW1-Vlanif200]vrrp vrid 5 priority 200
+[LSW1-Vlanif200]vrrp vrid 5 pre	
+[LSW1-Vlanif200]vrrp vrid 5 preempt-mode t	
+[LSW1-Vlanif200]vrrp vrid 5 preempt-mode timer d	
+[LSW1-Vlanif200]vrrp vrid 5 preempt-mode timer delay 0
+[LSW1-Vlanif200]vrrp vrid 5 tr	
+[LSW1-Vlanif200]vrrp vrid 5 track in	
+[LSW1-Vlanif200]vrrp vrid 5 track interface g0/0/2 r	
+[LSW1-Vlanif200]vrrp vrid 5 track interface g0/0/2 reduced 100
+[LSW1-Vlanif200]vrrp vrid 5 track interface g0/0/1 reduced 100
+[LSW1-Vlanif200]
+备
+[LSW2]int vlan 200
+[LSW2-Vlanif200]vrrp v	
+[LSW2-Vlanif200]vrrp vrid 5 v	
+[LSW2-Vlanif200]vrrp vrid 5 virtual-ip 172.14.0.1
+[LSW2-Vlanif200]vrrp vrid 5 pri	
+[LSW2-Vlanif200]vrrp vrid 5 priority 150
+[LSW2-Vlanif200]vrrp vrid 5 pree	
+[LSW2-Vlanif200]vrrp vrid 5 preempt-mode t	
+[LSW2-Vlanif200]vrrp vrid 5 preempt-mode timer d	
+[LSW2-Vlanif200]vrrp vrid 5 preempt-mode timer delay 0
+[LSW2-Vlanif200]

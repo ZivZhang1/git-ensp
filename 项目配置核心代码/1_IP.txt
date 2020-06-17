@@ -1,0 +1,206 @@
+
+接入层
+[SW2]vlan 20
+[SW2-vlan20]q
+[SW2]int e0/0/1
+[SW2-Ethernet0/0/1]port link-type access 	
+[SW2-Ethernet0/0/1]port default vlan 20
+[SW2-Ethernet0/0/1]int g0/0/1
+[SW2-GigabitEthernet0/0/1]port link-type trunk 
+[SW2-GigabitEthernet0/0/1]port trunk allow-pass vlan 20
+[SW2-GigabitEthernet0/0/1]q
+[SW2]
+
+
+
+
+
+
+
+
+汇聚层
+<Huawei>sys
+Enter system view, return user view with Ctrl+Z.
+[Huawei]sys LSW3
+[LSW3]vlan batch 10 20 30 100 200
+Info: This operation may take a few seconds. Please wait for a moment...done.
+[LSW3]int g0/0/1
+[LSW3-GigabitEthernet0/0/1]port link-type trunk 
+[LSW3-GigabitEthernet0/0/1]port trunk allow-pass  vlan 10
+[LSW3-GigabitEthernet0/0/1]int g0/0/2
+[LSW3-GigabitEthernet0/0/2]port link-type trunk 
+[LSW3-GigabitEthernet0/0/2]port trunk allow-pass vlan 20
+[LSW3-GigabitEthernet0/0/2]int g0/0/3
+[LSW3-GigabitEthernet0/0/3]port link-type trunk 
+[LSW3-GigabitEthernet0/0/3]port trunk allow-pass vlan 30
+[LSW3-GigabitEthernet0/0/3]int g0/0/4
+[LSW3-GigabitEthernet0/0/4]port link-type trunk 
+[LSW3-GigabitEthernet0/0/4]port trunk allow-pass vlan 100
+[LSW3-GigabitEthernet0/0/4]int g0/0/5
+[LSW3-GigabitEthernet0/0/5]port link-type trunk 
+[LSW3-GigabitEthernet0/0/5]port trunk allow-pass vlan 200
+[LSW3-GigabitEthernet0/0/5]int g0/0/6
+[LSW3-GigabitEthernet0/0/6]port link-type trunk 
+[LSW3-GigabitEthernet0/0/6]port trunk allow-pass vlan 10 20 30 100 200
+[LSW3-GigabitEthernet0/0/6]int g0/0/7
+[LSW3-GigabitEthernet0/0/7]port link-type trunk 
+[LSW3-GigabitEthernet0/0/7]p	
+[LSW3-GigabitEthernet0/0/7]port trunk allow-pass vlan 10 20 30 100 200
+[LSW3-GigabitEthernet0/0/7]q
+[LSW3]
+
+
+
+
+
+
+
+核心层
+<Huawei>sys
+Enter system view, return user view with Ctrl+Z.
+[Huawei]sys LSW1
+[LSW1]
+Jun 16 2020 20:53:10-08:00 LSW1 DS/4/DATASYNC_CFGCHANGE:OID 1.3.6.1.4.1.2011.5.2
+5.191.3.1 configurations have been changed. The current change number is 4, the 
+change loop count is 0, and the maximum number of records is 4095.
+[LSW1]undo info enable
+Info: Information center is disabled.
+[LSW1]vlan batch 10 20 30 100 200 300
+Info: This operation may take a few seconds. Please wait for a moment...done.
+[LSW1]int g0/0/1
+[LSW1-GigabitEthernet0/0/1]port link-type trunk 
+[LSW1-GigabitEthernet0/0/1]port trunk allow-pass vlan 10 20 30 100 200
+[LSW1-GigabitEthernet0/0/1]q
+[LSW1]int vlan 10
+[LSW1-Vlanif10]ip add 22.22.11.10 24
+[LSW1-Vlanif10]int vlan 20
+[LSW1-Vlanif20]ip add 22.22.22.10 24
+[LSW1-Vlanif20]int vlan 30
+[LSW1-Vlanif30]ip add 22.22.33.10 24
+[LSW1-Vlanif30]q
+[LSW1]dhcp enable
+Info: The operation may take a few seconds. Please wait for a moment.done.
+[LSW1]dhcp sp	
+[LSW1]dhcp sn	
+[LSW1]dhcp snooping enable
+[LSW1]int vlan 100
+[LSW1-Vlanif100]ip add 172.16.0.10 16
+[LSW1-Vlanif100]dhcp se	
+[LSW1-Vlanif100]dhcp select g	
+[LSW1-Vlanif100]dhcp select global 
+[LSW1-Vlanif100]q
+[LSW1]ip pool officebuilding
+Info:It's successful to create an IP address pool.
+[LSW1-ip-pool-officebuilding]net	
+[LSW1-ip-pool-officebuilding]network 172.16.0.0 mask 255.255.255.0
+[LSW1-ip-pool-officebuilding]gat	
+[LSW1-ip-pool-officebuilding]gateway-list 172.16.0.1
+[LSW1-ip-pool-officebuilding]dns	
+[LSW1-ip-pool-officebuilding]dns-list 8.8.8.8
+[LSW1-ip-pool-officebuilding]q
+[LSW1]int vlan 200
+[LSW1-Vlanif200]ip add 172.14.0.10 14
+[LSW1-Vlanif200]dhcp se	
+[LSW1-Vlanif200]dhcp selectg	
+[LSW1-Vlanif200]dhcp select g	
+[LSW1-Vlanif200]dhcp select global 
+[LSW1-Vlanif200]q
+[LSW1]ip pool apartment
+Info:It's successful to create an IP address pool.
+[LSW1-ip-pool-apartment]net	
+[LSW1-ip-pool-apartment]network 172.14.0.0 mask 255.255.255.0
+[LSW1-ip-pool-apartment]gat	
+[LSW1-ip-pool-apartment]gateway-list 172.14.0.1
+[LSW1-ip-pool-apartment]dns	
+[LSW1-ip-pool-apartment]dns-list 8.8.8.8
+[LSW1-ip-pool-apartment]q
+[LSW1]int vlan 300
+[LSW1-Vlanif300]ip add 12.0.0.2 24
+[LSW1-Vlanif300]q
+[LSW1]int g0/0/2
+[LSW1-GigabitEthernet0/0/2]po	
+[LSW1-GigabitEthernet0/0/2]port l	
+[LSW1-GigabitEthernet0/0/2]port link-t	
+[LSW1-GigabitEthernet0/0/2]port link-type a	
+[LSW1-GigabitEthernet0/0/2]port link-type access 
+[LSW1-GigabitEthernet0/0/2]po	
+[LSW1-GigabitEthernet0/0/2]port de	
+[LSW1-GigabitEthernet0/0/2]port default v	
+[LSW1-GigabitEthernet0/0/2]port default vlan 3	
+[LSW1-GigabitEthernet0/0/2]port default vlan 300
+[LSW1-GigabitEthernet0/0/2]q
+[LSW1]
+
+
+
+
+
+
+<Huawei>sys
+Enter system view, return user view with Ctrl+Z.
+[Huawei]sys LSW2
+[LSW2]vlan batch 10
+Jun 16 2020 21:09:59-08:00 LSW2 DS/4/DATASYNC_CFGCHANGE:OID 1.3.6.1.4.1.2011.5.2
+5.191.3.1 configurations have been changed. The current change number is 4, the 
+change loop count is 0, and the maximum number of rec	
+[LSW2]undo info enable
+Info: Information center is disabled.
+[LSW2]vlan batch 10 20 30 100 200 300
+Info: This operation may take a few seconds. Please wait for a moment...done.
+[LSW2]int g0/0/1
+[LSW2-GigabitEthernet0/0/1]port l	
+[LSW2-GigabitEthernet0/0/1]port link-	
+[LSW2-GigabitEthernet0/0/1]port link-flap	
+[LSW2-GigabitEthernet0/0/1]port link-type t	
+[LSW2-GigabitEthernet0/0/1]port link-type trunk 
+[LSW2-GigabitEthernet0/0/1]p	
+[LSW2-GigabitEthernet0/0/1]port t	
+[LSW2-GigabitEthernet0/0/1]port trunk a	
+[LSW2-GigabitEthernet0/0/1]port trunk allow-pass vlan 10 20 30 100 200
+[LSW2-GigabitEthernet0/0/1]int vlan 10
+[LSW2-Vlanif10]ip add 22.22.11.20 24
+[LSW2-Vlanif10]int vlan 20
+[LSW2-Vlanif20]ip add 22.22.22.20 24
+[LSW2-Vlanif20]int vlan 30
+[LSW2-Vlanif30]ip add 22.22.33.20 24
+[LSW2-Vlanif30]int vlan 100
+[LSW2-Vlanif100]ip add 172.16.0.10 24
+[LSW2-Vlanif100]int vlan 200
+[LSW2-Vlanif200]ip add 172.14.0.10 24
+[LSW2-Vlanif200]q
+[LSW2]int vlan 300
+[LSW2-Vlanif300]ip add 13.0.0.2 24
+[LSW2-Vlanif300]q
+[LSW2]int g0/0/2
+[LSW2-GigabitEthernet0/0/2] p	
+[LSW2-GigabitEthernet0/0/2]portl	
+[LSW2-GigabitEthernet0/0/2]port l	
+[LSW2-GigabitEthernet0/0/2]port link-t	
+[LSW2-GigabitEthernet0/0/2]port link-type a	
+[LSW2-GigabitEthernet0/0/2]port link-type access 
+[LSW2-GigabitEthernet0/0/2]p	
+[LSW2-GigabitEthernet0/0/2]port de	
+[LSW2-GigabitEthernet0/0/2]port default v	
+[LSW2-GigabitEthernet0/0/2]port default vlan 300
+[LSW2-GigabitEthernet0/0/2]q
+[LSW2]
+
+
+
+
+
+
+<USG6000V1>sys
+Enter system view, return user view with Ctrl+Z.
+[USG6000V1]int g1/0/0
+[USG6000V1-GigabitEthernet1/0/0]ip add 12.0.0.1 24
+[USG6000V1-GigabitEthernet1/0/0]int g1/0/1
+[USG6000V1-GigabitEthernet1/0/1]service-manage all permit 
+[USG6000V1-GigabitEthernet1/0/1]ip add 13.0.0.1 24
+
+
+
+
+
+
+
